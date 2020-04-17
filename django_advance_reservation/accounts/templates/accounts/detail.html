@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
-  <p>detail</p>
+<h1>{{ user.pk }} : {{ user.username }}</h1>
+{% if request.user == user %}
+    <!-- <a href="{% url 'accounts:update' %}">회원 수정</a> -->
+    <form action="{% url 'accounts:delete' %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-secondary">회원 탈퇴</button>
+    </form>
+{% endif %}
+<hr>
+
 {% endblock %}
