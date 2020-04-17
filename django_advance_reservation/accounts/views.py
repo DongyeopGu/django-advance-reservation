@@ -1,16 +1,16 @@
 from django.shortcuts import render, redirect
-from .forms import SignupForm
+from .forms import ApplicationForm
 from .models import User
 # Create your views here.
 
 def application(request):
     if request.method == 'POST':
-        form = SignupForm(request.POST)
+        form = ApplicationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('accounts:application')
     else:
-        form = SignupForm()
+        form = ApplicationForm()
     context = {
         'form': form
     }

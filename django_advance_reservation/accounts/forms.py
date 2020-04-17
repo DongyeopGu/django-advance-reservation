@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm # 기본 제공하는 mod
 from django import forms
 from .models import User		# 커스터마이징한 User 모델을 불러옴
 
-class SignupForm(UserCreationForm):		# 상속받아 사용할 클래스 선언
+class ApplicationForm(UserCreationForm):		# 상속받아 사용할 클래스 선언
     def __init__(self, *args, **kwargs):	# init을 통해 존재하던 필드의 정보를 수정
         super().__init__(*args, **kwargs)
         class_update_fields = ['password1', 'password2']
