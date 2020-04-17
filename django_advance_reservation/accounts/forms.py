@@ -61,6 +61,8 @@ class ApplicationForm(UserCreationForm):		# 상속받아 사용할 클래스 선
                 }
             )
         }
+
+        
 class ApplicationChangeForm(UserChangeForm):		# User 정보를 update하기 위하여 
     class Meta:
         model = get_user_model()

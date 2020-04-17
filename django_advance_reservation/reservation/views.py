@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 
 def index(request):     # 메인 페이지에 가장 먼저 보여줄 것들
-    pass
+    return render(request, 'reservation/index.html')
 
 def board(request):     # 필요한 사진과 정보를 올려둘 board
     pass

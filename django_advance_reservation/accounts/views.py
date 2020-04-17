@@ -1,7 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import ApplicationForm, ApplicationChangeForm
+from .forms import ApplicationForm
+from .forms import ApplicationChangeForm
 from .models import User
 from django.contrib.auth import get_user_model
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.views.decorators.http import require_POST
+
 # Create your views here.
 
 def application(request):
@@ -9,7 +16,7 @@ def application(request):
         form = ApplicationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('accounts:detail')
+            return redirect('reservation:index')
     else:
         form = ApplicationForm()
     context = {
@@ -17,6 +24,37 @@ def application(request):
     }
     return render(request, 'accounts/application.html', context)
     
+def detail(request, pk):
+    application_list = get_user_model()
+    form = get_object_or_404(application_list, pk=pk)
+    context = {
+        'form': form
+    }
+    return render(request, 'accounts/detail.html', context)
+
+
+def login(request):
+    if request.user.is_authenticated:
+        return redirect("reservation:index")
+    if request.method=="POST":
+        form = AuthenticationForm(request, request.POST,)
+        if form.is_valid():
+            auth_login(request, form.get_user())
+            return redirect("reservation:index")
+    else:
+        form = AuthenticationForm()
+    context = {
+        'form' : form
+    }
+    return render(request, 'accounts/login.html', context)
+
+@login_required
+def logout(request):
+    auth_logout(request)
+    return redirect("reservation:index")
+
+@require_POST
+@login_required
 def update(request, pk):
     if request.method=="POST":
         form = ApplicationChangeForm(request.POST, instance=request.user)
@@ -32,14 +70,5 @@ def update(request, pk):
 
 def delete(request):
     request.user.delete()
-    return redirect('accounts/application')
-
-
-def detail(request, pk):
-    application_list = get_user_model()
-    user = get_object_or_404(application_list, pk=pk)
-    context = {
-        'user': user
-    }
-    return render(request, 'accounts/detail.html', context)
+    return redirect('reservation:index')
 

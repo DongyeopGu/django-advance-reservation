@@ -2,5 +2,10 @@
 {% load static %}
 {% block body %}
   <p>update</p>
-  {{form}}
+  <form action="" method="POST">
+    {% csrf_token %}
+    {{ form }}}
+    <button class="btn btn-primary">수정</button>
+</form>
+
 {% endblock %}

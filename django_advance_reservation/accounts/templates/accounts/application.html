@@ -1,21 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
-<form action='' method="POST">
+<form action="{% url 'accounts:application' %}" method="POST">
   {% csrf_token %}
   <div>
     <label>이름</label>
     {{ form.username }}
   </div>
-  <div>
-    <label>주소</label>
-    {{ form.address }}
-  </div>
-  <div>
-    <label>email 주소</label>
-    {{ form.email_address }}
-  </div>
-  
   <div>
     <label>비밀번호</label>
     {{ form.password1 }}
@@ -25,6 +16,18 @@
     {{ form.password2 }}
   </div>
   <div>
+    <label>핸드폰 번호</label>
+    {{ form.phone_number }}
+  </div>
+  <div>
+    <label>주소</label>
+    {{ form.address }}
+  </div>
+  <div>
+    <label>email 주소</label>
+    {{ form.email_address }}
+  </div>
+  <div>
     <label>고구마 사이즈</label>
     {{ form.sweetpotato_size }}
   </div>
@@ -32,8 +35,7 @@
     <label>고구마 개수</label>
     {{ form.sweetpotato_num }}
   </div>
-  
-  <input type="submit" value="제출">
+  <button class="btn btn-info">제출</button>
 </form>
 
 {% endblock %}
