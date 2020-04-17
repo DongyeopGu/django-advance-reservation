@@ -8,5 +8,5 @@ urlpatterns = [
     path('<int:pk>/update/', views.update, name="update"),          # 신청 정보 수정
     path('<int:pk>/delete/', views.delete, name="delete"),          # 신청 정보 삭제
     path('<int:pk>/', views.detail, name="detail"),                 # 신청 정보 확인
-    path('reservation/', include('reservation.urls')),              # 
+    # path('reservation/', include('reservation.urls')),              # 
 ]

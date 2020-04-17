@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<form action='' method="POST">
+  {% csrf_token %}
+  <div>
+    <label>이름</label>
+    {{ form.username }}
+  </div>
+  <div>
+    <label>주소</label>
+    {{ form.address }}
+  </div>
+  <div>
+    <label>email 주소</label>
+    {{ form.email_address }}
+  </div>
+  <div>
+    <label>핸드폰번호</label>
+    {{ form.password1 }}
+  </div>
+  <div>
+    <label>핸드폰번호 확인</label>
+    {{ form.password2 }}
+  </div>
+  <div>
+    <label>고구마 사이즈</label>
+    {{ form.sweetpotato_size }}
+  </div>
+  <div>
+    <label>고구마 개수</label>
+    {{ form.sweetpotato_num }}
+  </div>
+  
+  <input type="submit" value="제출">
+</form>
+
+{% endblock %}
