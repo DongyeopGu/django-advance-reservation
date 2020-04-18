@@ -1,15 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
-<form action="" method="POST">
-  {% csrf_token %}
-  <div class="form-row">
-    <div class="col-6">
-      <label for="id_username">아이디</label></div>
-    {{ form.username }}
+<div class="align-items-center">
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div class="form-row mt-4 mb-4">
+      <div class="col-12">
+        <label for="id_username" class="mb-4">아이디</label>
+      </div>
+      <div class="col-12">{{ form.username }}</div>
+    </div>
+    <div class="form-row mb-4">
+      <div class="col-12">
+        <label for="id_password" class="mb-4">비밀번호</label>
+      </div>
+      <div class="col-12">{{ form.password }}</div>
+    </div>
+    <div>
+      <button class="btn btn-primary">로그인</button>
+      <a class="btn btn-primary float-right" href="{% url 'accounts:application' %}">회원가입</a>
   </div>
-  <button class="btn btn-primary">로그인</button>
-  <a href="{% url 'accounts:application' %}">회원가입</a>
-</form>
-
+  </form>
+</div>
 {% endblock %}

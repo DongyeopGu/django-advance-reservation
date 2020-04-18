@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ApplicationForm
 from .forms import ApplicationChangeForm
+from .forms import myAuthenticationForm
 from .models import User
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
 from django.views.decorators.http import require_POST
 
 # Create your views here.
@@ -37,12 +37,12 @@ def login(request):
     if request.user.is_authenticated:
         return redirect("reservation:index")
     if request.method=="POST":
-        form = AuthenticationForm(request, request.POST)
+        form = myAuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect("reservation:index",)
+            return redirect("reservation:index")
     else:
-        form = AuthenticationForm()
+        form = myAuthenticationForm()
     context = {
         'form' : form
     }
@@ -59,7 +59,7 @@ def update(request, pk):
         form = ApplicationChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('accounts:application')
+            return redirect('reservation:index')
     else:
         form = ApplicationChangeForm(instance=request.user)
     context = {

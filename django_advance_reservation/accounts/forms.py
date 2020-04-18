@@ -68,6 +68,24 @@ class ApplicationForm(UserCreationForm):		# 상속받아 사용할 클래스 선
                 }
             )
         }
+class myAuthenticationForm(AuthenticationForm):
+    class Meta:
+        model = User
+        fields = ['username','password']
+    def __init__(self, *args, **kwargs):
+        super(myAuthenticationForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget = forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+        self.fields['password'].widget = forms.PasswordInput(
+            attrs={
+                'class': 'form-control'
+            }
+        ) 
+
+
 
 class ApplicationChangeForm(UserChangeForm):		# User 정보를 update하기 위하여 
     class Meta:
