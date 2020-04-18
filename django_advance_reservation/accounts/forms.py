@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm # 기본 제공하는 mod
 from django import forms
 from .models import User		# 커스터마이징한 User 모델을 불러옴
 from django.contrib.auth.forms import UserChangeForm  # User 정보를 수정하기 위해
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import get_user_model		# User 정보를 수정할 때 정보를 가져오기 위해
 
 class ApplicationForm(UserCreationForm):		# 상속받아 사용할 클래스 선언
@@ -17,6 +18,7 @@ class ApplicationForm(UserCreationForm):		# 상속받아 사용할 클래스 선
         model = User			 # Bootstrap을 사용하기 위해서 추가했음
         fields = (
             'username',
+            'korean_name',
             'email_address',
             'sweetpotato_size',
             'sweetpotato_num',
@@ -30,6 +32,11 @@ class ApplicationForm(UserCreationForm):		# 상속받아 사용할 클래스 선
         )
         widgets = {
             'username': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'korean_name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
                 }
@@ -62,8 +69,50 @@ class ApplicationForm(UserCreationForm):		# 상속받아 사용할 클래스 선
             )
         }
 
-        
 class ApplicationChangeForm(UserChangeForm):		# User 정보를 update하기 위하여 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'email_address','address', 'sweetpotato_num', 'sweetpotato_size', 'phone_number']
+        fields = ['username', 'email_address','korean_name','address', 'sweetpotato_num', 'sweetpotato_size', 'phone_number']
+        SIZE_CHOICES = (
+            ('대','대'),
+            ('중','중'),
+            ('중','소'),
+        )
+        widgets = {
+            'username': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'korean_name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'email_address': forms.EmailInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'sweetpotato_size': forms.Select(
+                choices=SIZE_CHOICES,
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'sweetpotato_num': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'address': forms.TextInput(
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
+            'phone_number': forms.TextInput(
+                attrs={
+                    'class': 'form-control'
+                }
+            )
+        }

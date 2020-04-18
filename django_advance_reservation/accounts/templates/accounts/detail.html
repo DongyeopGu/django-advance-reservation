@@ -5,7 +5,6 @@
     <a href="{% url 'accounts:update' form.pk %}">회원 수정</a>
     <form action="{% url 'accounts:delete'  %}" method="POST">
         {% csrf_token %}
-        {{form}}
         <button class="btn btn-secondary">회원 탈퇴</button>
     </form>
     {% endif %}

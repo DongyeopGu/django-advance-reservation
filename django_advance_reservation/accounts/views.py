@@ -37,10 +37,10 @@ def login(request):
     if request.user.is_authenticated:
         return redirect("reservation:index")
     if request.method=="POST":
-        form = AuthenticationForm(request, request.POST,)
+        form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect("reservation:index")
+            return redirect("reservation:index",)
     else:
         form = AuthenticationForm()
     context = {
@@ -53,8 +53,7 @@ def logout(request):
     auth_logout(request)
     return redirect("reservation:index")
 
-@require_POST
-@login_required
+
 def update(request, pk):
     if request.method=="POST":
         form = ApplicationChangeForm(request.POST, instance=request.user)

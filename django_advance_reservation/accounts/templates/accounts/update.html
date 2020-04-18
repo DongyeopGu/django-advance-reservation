@@ -2,10 +2,44 @@
 {% load static %}
 {% block body %}
   <p>update</p>
-  <form action="" method="POST">
+  <p class="text-danger">{{ form.errors }}</p>
+  <form action="{% url 'accounts:application' %}" method="POST">
     {% csrf_token %}
-    {{ form }}}
-    <button class="btn btn-primary">수정</button>
-</form>
+    <div class="form-row mb-4">
+      <div class="col-12">
+        <label>이름</label>
+        {{ form.korean_name }}
+      </div>
+    </div>
+    <div class="form-row mb-4">
+      <div class="col-12">
+        <label>핸드폰 번호</label>
+        {{ form.phone_number }}
+      </div>
+    </div>  
+    <div class="form-row mb-4">
+      <div class="col-12">
+        <label>주소</label>
+        {{ form.address }}
+      </div>
+    </div>
+    <div class="form-row mb-4">
+      <div class="col-12">
+        <label>email 주소</label>
+        {{ form.email_address }}
+      </div>
+    </div>
+    <div class="form-row mb-4">
+      <div class="col-6">
+        <label>고구마 사이즈</label>
+        {{ form.sweetpotato_size }}
+      </div>
+      <div class="col-6">
+        <label>신청 수량(1box 당 10 Kg)</label>
+        {{ form.sweetpotato_num }}
+      </div>
+    </div>
+    <button class="btn btn-info">수정</button>
+  </form>
 
 {% endblock %}

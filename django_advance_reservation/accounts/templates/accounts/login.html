@@ -3,7 +3,11 @@
 {% block body %}
 <form action="" method="POST">
   {% csrf_token %}
-  {{ form.as_table}}
+  <div class="form-row">
+    <div class="col-6">
+      <label for="id_username">아이디</label></div>
+    {{ form.username }}
+  </div>
   <button class="btn btn-primary">로그인</button>
   <a href="{% url 'accounts:application' %}">회원가입</a>
 </form>
