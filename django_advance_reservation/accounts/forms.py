@@ -24,11 +24,16 @@ class ApplicationForm(UserCreationForm):		# 상속받아 사용할 클래스 선
             'sweetpotato_num',
             'address',
             'phone_number',
+            'sweetpotato_type',
         )
         SIZE_CHOICES = (
             ('대','대'),
             ('중','중'),
             ('중','소'),
+        )
+        SWEETPOTATO_TYPE = (
+            ('호박고구마', '호박고구마'),
+            ('밤고구마','밤고구마')
         )
         widgets = {
             'username': forms.TextInput(
@@ -66,12 +71,15 @@ class ApplicationForm(UserCreationForm):		# 상속받아 사용할 클래스 선
                 attrs={
                     'class': 'form-control'
                 }
+            ),
+            'sweetpotato_type': forms.Select(
+                choices=SWEETPOTATO_TYPE,
+                attrs={
+                    'class':'form-control'
+                }
             )
         }
 class myAuthenticationForm(AuthenticationForm):
-    class Meta:
-        model = User
-        fields = ['username','password']
     def __init__(self, *args, **kwargs):
         super(myAuthenticationForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget = forms.TextInput(
@@ -84,17 +92,25 @@ class myAuthenticationForm(AuthenticationForm):
                 'class': 'form-control'
             }
         ) 
+    class Meta:
+        model = User
+        fields = ['username','password']
+    
 
 
 
 class ApplicationChangeForm(UserChangeForm):		# User 정보를 update하기 위하여 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'email_address','korean_name','address', 'sweetpotato_num', 'sweetpotato_size', 'phone_number']
+        fields = ['username', 'email_address','korean_name','address', 'sweetpotato_num', 'sweetpotato_size', 'phone_number', 'sweetpotato_type']
         SIZE_CHOICES = (
             ('대','대'),
             ('중','중'),
             ('중','소'),
+        )
+        SWEETPOTATO_TYPE = (
+            ('호박고구마', '호박고구마'),
+            ('밤고구마','밤고구마')
         )
         widgets = {
             'username': forms.TextInput(
@@ -131,6 +147,12 @@ class ApplicationChangeForm(UserChangeForm):		# User 정보를 update하기 위�
             'phone_number': forms.TextInput(
                 attrs={
                     'class': 'form-control'
+                }
+            ),
+            'sweetpotato_type': forms.Select(
+                choices=SWEETPOTATO_TYPE,
+                attrs={
+                    'class':'form-control'
                 }
             )
         }

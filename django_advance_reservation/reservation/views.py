@@ -10,3 +10,7 @@ def board(request):     # 필요한 사진과 정보를 올려둘 board
 
 def notice(request):    # 공지사항을 위해
     return render(request, 'reservation/notice.html')
+
+def qanda(request):
+    
+    return render(request, 'reservation/Q&A.html')

@@ -8,3 +8,4 @@ class User(AbstractUser): # User 모델에 추가할 필드를 넣기 위해 Abs
     sweetpotato_size = models.CharField(max_length=30)
     sweetpotato_num = models.IntegerField(default=1)
     address = models.CharField(max_length=500)
+    sweetpotato_type = models.CharField(max_length=40,blank=True)
