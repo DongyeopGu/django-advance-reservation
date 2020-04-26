@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+  <div>Q&A</div>
+  {% for qanda in QandAs %}
+    <div>
+      {{qanda.title}} 
+      <a href="{% url 'reservation:qandadetail' qanda.pk %}">detail</a>
+    </div>
+  {% endfor %}
+  <a href="{% url 'reservation:qandacreate' %}" class="btn btn-info">글 쓰기</a>
+{% endblock %}

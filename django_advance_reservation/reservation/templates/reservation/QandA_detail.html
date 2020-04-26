@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+    <h2 class="mt-4">Detail</h2>
+    <hr>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+              <label for="id_username">작성자</label>
+              <div class="form-control">{{ QandA.user }}</div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12">
+              <label for="id_username">제목</label>
+              <div class="form-control">{{ QandA.title }}</div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12">
+              <label for="id_username">내용</label>
+              <div class="form-control">{{ QandA.content}}</div>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'reservation:qanda' %}" class="btn btn-secondary">BACK</a>
+    <hr>
+    <h4>댓글</h4>
+    <div class="form-group">
+    {% for comment in QandA.comment_set.all %}
+        <div class="form-row">
+            <li class="form-control col-11 "> {{ comment.content }}</li>
+        </div>
+    {% endfor %}
+    </div>
+    <form action="{% url 'reservation:reply_create' qanda.pk %}" method="POST">
+        {% csrf_token %}
+        <div class="form-row">
+        <div class="col-11">{{ form.content }}</div>
+        </div>
+        <button class="btn btn-info col-1">작성</button>
+    </form>
+    <hr>
+
+
+{% endblock %}

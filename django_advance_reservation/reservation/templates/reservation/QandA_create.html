@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<form action="" method="POST">
+  {% csrf_token %}
+  <div>
+    {{ form.as_p }}
+  </div>
+  <button class='btn btn-primary'>작성</button>
+  <a href="{% url 'reservation:qanda' %}" class="btn btn-secondary float-right">BACK</a>
+</form>
+{% endblock %}

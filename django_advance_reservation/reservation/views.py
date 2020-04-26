@@ -1,4 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Reply, QandA
+from .forms import ReplyForm, QandAForm
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+
 
 # Create your views here.
 
@@ -12,5 +17,46 @@ def notice(request):    # 공지사항을 위해
     return render(request, 'reservation/notice.html')
 
 def qanda(request):
-    
-    return render(request, 'reservation/Q&A.html')
+    QandAs = QandA.objects.all()    
+    context = {
+        'QandAs' : QandAs
+    }
+    return render(request, 'reservation/QandA.html', context)
+
+@login_required
+def QandA_create(request):
+    if request.method == 'POST':
+        form = QandAForm(request.POST)
+        if form.is_valid():
+            QandA = form.save(commit=False)
+            QandA.user = request.user
+            QandA.save()
+            return redirect('reservation:qandadetail', QandA.pk)
+    else:
+        form = QandAForm()
+    context = {
+        'form' : form
+    }
+    return render(request, 'reservation/QandA_create.html', context)
+
+@login_required    
+def QandA_detail(request, qanda_pk):
+    QandA = get_object_or_404(QandA, pk=qanda_pk)
+    form = ReplyForm()
+    context = {
+        'QandA':QandA,
+        'form':form
+    }
+    return render(request, 'reservation/QandA_detail.html', context)
+
+@require_POST
+@login_required
+def reply_create(request, qanda_pk):
+    QandA = get_object_or_404(QandA, pk=qanda_pk)
+    form = ReplyForm(request.POST)
+    if form.is_valid():
+        reply=form.save(commit=False)
+        reply.user=request.user
+        reply.QandA=QandA
+        reply.save()
+    return redirect('reservation:qandadetail',QandA.pk)
