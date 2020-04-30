@@ -10,4 +10,5 @@ class Reply(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     QandA = models.ForeignKey(QandA, on_delete=models.CASCADE)
     content = models.TextField()
+
     

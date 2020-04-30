@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from .models import Reply, QandA
 from .forms import ReplyForm, QandAForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -16,9 +17,18 @@ def notice(request):    # 공지사항을 위해
     return render(request, 'reservation/notice.html')
 
 def QandA_list(request):
-    QandAs = QandA.objects.all()    
+    QandAs = QandA.objects.order_by('-pk')    
+    paginator = Paginator(QandAs, 4) #한 페이지 당 몇개 씩 보여줄 지 지정
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    reviews_all = get_list_or_404(QandA)
+    total_count = len(reviews_all)
+    total_page = total_count//4 + 1
+    page_range = range(1,total_page+1)
     context = {
-        'QandAs' : QandAs
+        'QandAs' : QandAs,
+        'page_obj': page_obj,
+        'page_range': page_range,
     }
     return render(request, 'reservation/QandA.html', context)
 
@@ -56,7 +66,7 @@ def reply_create(request, qanda_pk):
     if form.is_valid():
         reply=form.save(commit=False)
         reply.user = request.user
-        reply.qanda = qanda
+        reply.QandA = qanda
         reply.save()
     return redirect('reservation:QandA_detail',qanda.pk)
 

@@ -5,21 +5,20 @@
     <hr>
     <div class="form-group">
         <div class="form-row">
-            <div class="col-4">
+            <div class="col-2">
               <label for="id_username">작성자</label>
               <div class="form-control">{{ qanda.user }}</div>
             </div>
+            <div class="col-10">
+                <label for="id_username">제목</label>
+                <div class="form-control">{{ qanda.title }}</div>
+              </div>
         </div>
-        <div class="form-row">
-            <div class="col-12">
-              <label for="id_username">제목</label>
-              <div class="form-control">{{ qanda.title }}</div>
-            </div>
-        </div>
+      
         <div class="form-row">
             <div class="col-12">
               <label for="id_username">내용</label>
-              <div class="form-control">{{ qanda.content}}</div>
+              <div class="form-control"  style="height: auto;">{{ qanda.content}}</div>
             </div>
         </div>
     </div>
@@ -29,15 +28,17 @@
     <div class="form-group">
     {% for reply in qanda.reply_set.all %}
         <div class="form-row">
-            <li class="form-control col-11 "> {{ reply.content }}</li>
-            <a href="{% url 'reservation:reply_delete' qanda.pk reply.pk %}" class="btn btn-info col-1">삭제</a>
+            <div class="form-control col-1"> {{ reply.user }}</div>
+            <div class="form-control col-10 "> {{ reply.content }}</div>
+            <a href="{% url 'reservation:reply_delete' qanda.pk reply.pk %}" class="btn btn-danger ml-auto border-light col-0.5">삭제</a>
         </div>
     {% endfor %}
     </div>
+    <hr>
     <form action="{% url 'reservation:reply_create' qanda.pk %}" method="POST">
         {% csrf_token %}
         <div class="form-row">
-            <div class="col-11">{{ form }}</div>
+            <div class="col-11">{{ form.content }}</div>
             <button class="btn btn-info col-1">작성</button>
         </div>
     </form>

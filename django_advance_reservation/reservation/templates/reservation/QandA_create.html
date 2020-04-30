@@ -1,12 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
+<h2>글 쓰기</h2>
+<hr>
 <form action="" method="POST">
   {% csrf_token %}
-  <div>
-    {{ form.as_p }}
+  <div class="form-row">
+    <div class="col-12">
+      <label for="id_title">제목</label>
+      <div>{{ form.title }}</div>
+    </div>
   </div>
-  <button class='btn btn-primary'>작성</button>
-  <a href="{% url 'reservation:QandA_list' %}" class="btn btn-secondary float-right">BACK</a>
+  <div class="form-row">
+    <div class="col-12">
+      <label for="id_content">내용</label>
+      <div>{{ form.content }}</div>
+  </div>
+  </div>
+  <button class='btn btn-primary mt-3'>작성</button>
+  <a href="{% url 'reservation:QandA_list' %}" class="btn btn-secondary float-right mt-3">BACK</a>
 </form>
 {% endblock %}
