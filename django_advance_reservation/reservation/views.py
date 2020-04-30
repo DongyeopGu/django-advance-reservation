@@ -4,7 +4,6 @@ from .forms import ReplyForm, QandAForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
-
 # Create your views here.
 
 def index(request):     # 메인 페이지에 가장 먼저 보여줄 것들
@@ -16,7 +15,7 @@ def board(request):     # 필요한 사진과 정보를 올려둘 board
 def notice(request):    # 공지사항을 위해
     return render(request, 'reservation/notice.html')
 
-def qanda(request):
+def QandA_list(request):
     QandAs = QandA.objects.all()    
     context = {
         'QandAs' : QandAs
@@ -31,7 +30,7 @@ def QandA_create(request):
             QandA = form.save(commit=False)
             QandA.user = request.user
             QandA.save()
-            return redirect('reservation:qandadetail', QandA.pk)
+            return redirect('reservation:QandA_list')
     else:
         form = QandAForm()
     context = {
@@ -41,10 +40,10 @@ def QandA_create(request):
 
 @login_required    
 def QandA_detail(request, qanda_pk):
-    QandA = get_object_or_404(QandA, pk=qanda_pk)
+    qanda = get_object_or_404(QandA, pk=qanda_pk)
     form = ReplyForm()
     context = {
-        'QandA':QandA,
+        'qanda':qanda,
         'form':form
     }
     return render(request, 'reservation/QandA_detail.html', context)
@@ -52,11 +51,17 @@ def QandA_detail(request, qanda_pk):
 @require_POST
 @login_required
 def reply_create(request, qanda_pk):
-    QandA = get_object_or_404(QandA, pk=qanda_pk)
+    qanda = get_object_or_404(QandA, pk=qanda_pk)
     form = ReplyForm(request.POST)
     if form.is_valid():
         reply=form.save(commit=False)
-        reply.user=request.user
-        reply.QandA=QandA
+        reply.user = request.user
+        reply.qanda = qanda
         reply.save()
-    return redirect('reservation:qandadetail',QandA.pk)
+    return redirect('reservation:QandA_detail',qanda.pk)
+
+@login_required
+def reply_delete(request, reply_pk, qanda_pk):
+    reply = Reply.objects.get(pk=reply_pk)
+    reply.delete()
+    return redirect('reservation:QandA_detail',qanda_pk)
