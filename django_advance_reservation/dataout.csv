@@ -1,0 +1,3 @@
+id,password,last_login,is_superuser,username,first_name,last_name,email,is_staff,is_active,date_joined,phone_number,korean_name,email_address,sweetpotato_size,sweetpotato_num,address,sweetpotato_type
+1,pbkdf2_sha256$120000$8V7EnSXfstmE$TJrGcH7SAz2Z9IGITEjckrDO0Yyj3AO747ylRu4/ASo=,"2020-05-03 08:08:43.584521",0,gdy6650,"","","",0,1,"2020-04-30 08:12:34.504008",dkjfdkfjdif,rn,ekrdf@kdfjkl.dok,"대",1,djfkdjfkj,"호박고구마"
+2,pbkdf2_sha256$120000$Vm6cyygyhRyz$VJ7BcgvXBFobzbrbu4LNY8ZH0W9BZ90+jcRMXuEMgHE=,"2020-05-03 08:09:54.441830",1,admin,"","",ehdduq6650@naver.com,1,1,"2020-04-30 08:30:12.071288","","","","",1,"",""

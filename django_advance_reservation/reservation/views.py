@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
+from accounts.models import User
 from .models import Reply, QandA
 from .forms import ReplyForm, QandAForm
 from django.contrib.auth.decorators import login_required
@@ -8,7 +9,11 @@ from django.core.paginator import Paginator
 # Create your views here.
 
 def index(request):     # 메인 페이지에 가장 먼저 보여줄 것들
-    return render(request, 'reservation/index.html')
+    users = User.objects.all()
+    context= {
+        'users':users
+    }
+    return render(request, 'reservation/index.html', context)
 
 def board(request):     # 필요한 사진과 정보를 올려둘 board
     return render(request, 'reservation/board.html')

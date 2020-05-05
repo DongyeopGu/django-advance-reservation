@@ -88,3 +88,4 @@ $ pip install django==2.1.15
 > user를 넘겼는데 계속해서 에러 발생. 
 >
 > Model 이름 오타 수정 후 정상적으로 동작
+
