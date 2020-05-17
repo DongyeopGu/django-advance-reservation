@@ -11,5 +11,7 @@ urlpatterns = [
     path('QandA_create/', views.QandA_create, name='QandA_create'),
     path('QandA/<int:qanda_pk>/', views.QandA_detail, name='QandA_detail'),
     path('QandA/<int:qanda_pk>/reply/',views.reply_create, name='reply_create'),
-    path('QandA/<int:qanda_pk>/reply/<int:reply_pk>/delete/', views.reply_delete, name='reply_delete')
+    path('QandA/<int:qanda_pk>/reply/<int:reply_pk>/delete/', views.reply_delete, name='reply_delete'),
+    path('QandA/<int:qanda_pk>/update/', views.QandA_update, name='QandA_update'),
+    path('QandA/<int:qanda_pk>/delete/', views.QandA_delete, name='QandA_delete'),
 ]

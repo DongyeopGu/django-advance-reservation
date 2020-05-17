@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
+{% if request.resolver_match.url_name == 'QandA_create' %}
 <h2>글 쓰기</h2>
+{% else %}
+<h2>글 수정</h2>
+{% endif %}
 <hr>
 <form action="" method="POST">
   {% csrf_token %}
@@ -15,9 +19,13 @@
     <div class="col-12">
       <label for="id_content">내용</label>
       <div>{{ form.content }}</div>
+    </div>
   </div>
-  </div>
+  {% if request.resolver_match.url_name == 'QandA_create' %}
   <button class='btn btn-primary mt-3'>작성</button>
+  {% else %}
+  <button class='btn btn-primary mt-3'>수정</button>
+  {% endif %}
   <a href="{% url 'reservation:QandA_list' %}" class="btn btn-secondary float-right mt-3">BACK</a>
 </form>
 {% endblock %}

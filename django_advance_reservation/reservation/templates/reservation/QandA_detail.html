@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
+
     <h2 class="mt-4">질문</h2>
     <hr>
     <div class="form-group">
@@ -23,6 +24,8 @@
         </div>
     </div>
     <a href="{% url 'reservation:QandA_list' %}" class="btn btn-secondary">BACK</a>
+    <a href="{% url 'reservation:QandA_update' qanda.pk %}" class="btn btn-primary">수정</a>
+    <a href="{% url 'reservation:QandA_delete' qanda.pk %}" class="btn btn-danger">삭제</a>
     <hr>
     <h4>댓글</h4>
     <div class="form-group">

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from accounts.models import User
+from django.contrib import messages
 from .models import Reply, QandA
 from .forms import ReplyForm, QandAForm
 from django.contrib.auth.decorators import login_required
@@ -56,12 +57,43 @@ def QandA_create(request):
 @login_required    
 def QandA_detail(request, qanda_pk):
     qanda = get_object_or_404(QandA, pk=qanda_pk)
-    form = ReplyForm()
+
+    if qanda.user == request.user:
+        form = ReplyForm()
+        context = {
+            'qanda':qanda,
+            'form':form
+        }
+        return render(request, 'reservation/QandA_detail.html', context)
+    else:
+        messages.warning(request, '본인 글만 확인 가능합니다.')
+        return redirect('reservation:QandA_list')
+
+@login_required
+def QandA_update(request, qanda_pk):
+    qanda = get_object_or_404(QandA, pk=qanda_pk)
+    if request.method == 'POST':
+        form = QandAForm(request.POST, instance=qanda)
+        if form.is_valid():
+            qanda = form.save(commit=False)
+            qanda.user = request.user
+            qanda.save()
+            return redirect('reservation:QandA_detail', qanda.pk)
+    else:
+        form = QandAForm(instance=qanda)
     context = {
-        'qanda':qanda,
-        'form':form
+        'form': form
     }
-    return render(request, 'reservation/QandA_detail.html', context)
+    return render(request, 'reservation/QandA_create.html', context)
+
+@login_required
+def QandA_delete(request, qanda_pk):
+    qanda = get_object_or_404(QandA, pk=qanda_pk)
+    if request.user == qanda.user:
+        qanda.delete()
+    return redirect('reservation:QandA_list')
+
+        
 
 @require_POST
 @login_required

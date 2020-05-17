@@ -2,7 +2,7 @@
 {% load static %}
 {% block body %}
 <p class="text-danger">{{ form.errors }}</p>
-<div class="container" style="opacity: 0.8; background-color: gray;">
+<div class="container" style="opacity: 1; background-color: white; height: auto;">
   <form action="{% url 'accounts:application' %}" method="POST">
     {% csrf_token %}
     <div class="form-row mb-4">

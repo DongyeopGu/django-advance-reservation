@@ -127,6 +127,7 @@ STATICFILES_DIRS = (
        os.path.join(BASE_DIR, 'static'),
 )
 
+
 # email 보내기 위해
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # mail을 전송할 때 쓰는 백엔드 설정
 EMAIL_HOST = "smtp.gmail.com"
@@ -135,3 +136,6 @@ EMAIL_HOST_PASSWORD = 'rn1408815!'
 EMAIL_PORT = 587 #gmail 권장사항
 EMAIL_USE_TLS = True    # mail을 암호화하는 통신규약
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
